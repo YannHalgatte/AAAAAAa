@@ -226,7 +226,7 @@ padding :0px 20px;
 
 .color:hover{
     color: white;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
 .color1{
@@ -239,7 +239,4 @@ padding :0px 20px;
 
 .color3{
   background-color :#0d6dfd8c;
-}
-.cText{
-  color: white;
 }
