@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Capture_decran_2020-12-15_a_14.39.49.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="./style.css">
+    <title>Documentation API Zik'Quest</title>
+</head>
+<body>
+
+<!-- MENU -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand color" href="index.html">ZIK'QUEST</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link color" href="documentation.html">Documentation API</a>
+        <a class="nav-link color" href="pricing.html" >Pricing</a>
+        <a class="nav-link color" href="Statuts.html" >Statuts</a>
+        <a class="nav-link color" href="contact.html" >Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <div class="container mt-6 ">
+        <h1 class="mt-6 mb-5">DOCUMENTATION API</h1>
+        <p>Cette API a été créée dans le but de coder des sites de Blind Test aisément dans un objectif de s'amuser entre amis ou pour créer un business florissant. Il est possible de lancer des parties publiques ou de créer des parties personnalisées pour jouer qu'avec ses amis. Une partie équivaut à 15 chansons.</p>  
+        <h2>Les routes en Socket.io</h2>
+        <h3>/genres</h3>
+        <p>La première route permet de lancer une partie rapidement en choisissant simplement un genre de musique.
+        Cette route envoie à la connexion un welcome, le client écoutera à l’événement welcome une phrase "Prêt à jouer".</p>
+        <h4>Messages de chat et messages privés</h4>
+
+        <p>Le serveur reçoit les messages du chat et le client émet un objet .chatMessage. L’événement message renvoie l'objet avec :
+            le nom de l’évenement qui est accessible depuis le ".from", la photo des images depuis le ".fromImg", 
+            le corps du message depuis le ".message" et le temps depuis le ".time".</p>
+        <p>Les messages privés fonctionnent de la même manière que les messages de chat mais via l'objet ".messagePrivate" au lieu de ".chatMessage".</p>
+        <h4>Rejoindre une salle</h4>
+
+        <p>Pour rejoindre une salle, l'objet utilisé est ".joinRoom". Il faut envoyer l'objet ".message" pour que le message s'envoie. Pour un message privé, 
+            il faut renvoyer un objet avec l’id du client à qui on veut envoyer le message et le corps du message.
+            L'objet s'affiche donc de type {idReceiver : identifiant de l'utilisateur ,msg: votre message}.</p>
+        <p>Quand on rejoint une salle, il faut envoyer un objet avec {userName,room,playerImg}. La salle va émette à ".newUser" et ".roomInfo" avec les informations de la salle avec tous les joueurs dedans.</p>
+        <p>Pour accéder au nom de la salle, on émet un ".room" et un ".user" pour accèder à touts les utilisateurs de la partie avec l'accès à leur id, leur room, leurs points, leur image et leur pseudo.</p>
+        <h4>Connexion en cours de partie et lancement d'une nouvelle partie</h4>
+
+        <p>Si on arrive en cours de partie, on émet un objet .waiting qui indiquera qu’il faut attendre la prochaine musique pour jouer, sinon la partie est lancée.</p>
+        <p>L'objet ".party" va envoyer des musiques toutes les 30 secondes avec l'objet ".playlist" pour lancer la playlist. 
+            Cet événement aura toutes les 30 secondes avant que ça recommence. L'objet pour la prochaine partie est ".gameRestart".</p>
+        <h4>Déconnexion d'un utilisateur</h4>
+
+        <p>Lorsqu'un utilisateur se déconnecte, le serveur reçoit un ".suppUser" avec les nouvelles informations de la partie ".room" afin de mettre à jour les données des utilisateurs.</p>
+        <br>
+        <h3>/custom</h3>
+
+        <p>La route custom a pour but de créer des parties personnalisées. Son fonctionnement est similaire à la route" /genres".
+        La seule différence se situe par rapport à la gestion de l'administateur. La première personne de la salle reçoit un objet ".admin" qui équivaut à "true". 
+            Dans ce cas là, le serveur s'assure que seul l’administrateur peut démarrer la partie et qu'il envoie l’identifiant de la partie personnalisée.</p>
+
+        <h3>/artistes/id</h3>
+        <p>La route "/artistes/id" permet de récuperer les informations de l’artiste avec son nom, son image et le genre de musique qu’il fait.</p>
+
+        <h3>/search</h3>
+        <p>/search permet de rechercher un artiste, une chanson ou une playlist en respectant cette nomenclature : http://[...]/search?q=lorem_ipsum&type=lorem_ipsum
+            où "q" représente le nom que l'on recherche et "type" équivaut au type que l'on recherche (artiste, chanson, playlist).</p>
+
+        <h3>/tracks/id</h3>
+        <p>/tracks/id envoie un identifiant pour récupérer une chanson qui est liée à cet identifiant.</p>
+
+        <br>
+        <h2>Les routes HTTP</h2>
+        <br>
+        <h3>Requête GET sur /genres</h3>
+        <p>Pour recevoir tous les genres de Spotify, une requette GET est faite sur "/genres". Si tout est valide, un "statut 200" apparaît et la donnée renvoyée est un tableau de genres. Sinon c’est une "erreur serveur 500" qui apparaît.</p>
+    </div>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+<footer class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <H3>Produit</H3>
+              <ul  class="paddingo">
+                  <li>L'exemple</li>
+                  <li>Pricing</li>
+              </ul>
+            </div>
+            <div class="col-4">
+              <H3>Pour les Developpeurs</H3>
+              <ul  class="paddingo">
+                  <li> Documentation </li>
+              </ul>
+            </div>
+            <div class="col-4">
+              <H3>Contact</H3>
+              <ul class="paddingo">
+                  <li> Contactez-nous </li>
+              </ul>
+            </div>
+        </div>
+        <figure>
+          <blockquote class="blockquote">
+            <p>Ce travail a été réalisé dans le cadre d'un projet scolaire et n'est en aucun cas à but lucratif, les images utilisées sont la propriété des ayants droits.</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+           Étudiants en H3 à HETIC.         </figcaption>
+        </figure>
+      </div>
+    </footer>
+</html>
