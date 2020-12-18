@@ -109,7 +109,7 @@
   
   p {
     font-family: 'Noto Sans', sans-serif;
-    font-size: 17px;
+    font-size: 20px;
   
     padding: 0px 20px;
   }
@@ -239,4 +239,19 @@ padding :0px 20px;
 
 .color3{
   background-color :#0d6dfd8c;
+}
+.color7{
+  color: black;
+  text-decoration: none;
+}
+.WhiteOut{
+  color: white;
+}
+.Resize{
+width: 65%;
+margin-left: auto;
+margin-right: auto;
+}
+.aligned{
+  padding: 0!important;
 }
